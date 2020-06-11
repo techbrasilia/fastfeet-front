@@ -1,40 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, Form } from './styles';
-import logo from '../../assets/images/logo.png';
-import api from '../../services/api';
+import { Form, Input } from '@rocketseat/unform';
+
+import logo from '../../assets/images/fastfeet-logo.png';
+import { signInRequest } from '../../store/modules/auth/actions';
 
 export default function Login() {
-    const { email, setEmail } = useState('');
-    const { password, setPassword } = useState('');
-    async function handleSubmit(e) {
-        e.preventDefault();
-        const response = await api.post('/sessions', { email, password });
-        console.log(response);
-        alert(response);
+    const dispatch = useDispatch();
+
+    function handleSubmit({ email, password }) {
+        dispatch(signInRequest(email, password));
     }
     return (
-        <Container>
+        <>
+            <img src={logo} alt="Fastfeet" />
             <Form onSubmit={handleSubmit}>
-                <img src={logo} alt="Fastfeet" />
-                <label>Seu E-mail</label>
-                <input
-                    type="text"
+                <label>SEU E-MAIL</label>
+                <Input
+                    type="email"
                     name="email"
-                    id="email"
                     placeholder="exemplo@email.com"
-                    value={email}
                 />
-                <label>Sua senha</label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder=""
-                    value={password}
-                />
+                <label>SUA SENHA</label>
+                <Input type="password" name="password" placeholder="******" />
                 <button type="submit">Entrar no sistema</button>
             </Form>
-        </Container>
+        </>
     );
 }
