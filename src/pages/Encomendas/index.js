@@ -1,29 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import { MdAdd } from 'react-icons/md';
 
 import { Container, Table, Linha } from './styles';
 import api from '../../services/api';
-import Actions from '../../components/Actions';
+import ActionsDelivery from '../../components/Actions/ActionsDelivery';
 
 export default function Encomendas() {
-  const [entregue, setEntregue] = useState(true);
-  const [entregas, setEntregas] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    async function loadEntregas() {
-      await api.get('deliveries').then((response) => {
-        console.log('entregas ', response.data);
-        setEntregas(response.data);
-      });
+    if (search) {
+      async function searchDeliveries() {
+        await api
+          .get('deliveries', {
+            params: { q: search },
+          })
+          .then((response) => {
+            setDeliveries(response.data);
+          });
+      }
+
+      searchDeliveries();
+    } else {
+      async function loadDeliveries() {
+        await api.get('deliveries').then((response) => {
+          setDeliveries(response.data);
+        });
+      }
+      loadDeliveries();
     }
-    loadEntregas();
-  }, []);
+  }, [search]);
+
+  function handleSearchDelivery(s) {
+    setSearch(s.target.value);
+  }
 
   return (
     <Container>
       <h1>Gerenciando encomendas</h1>
-      <form>
-        <input type="text" placeholder="Buscar por encomendas" />
-      </form>
+      <header>
+        <form>
+          <input
+            type="text"
+            placeholder="Buscar por encomendas"
+            value={search}
+            onChange={handleSearchDelivery}
+          />
+        </form>
+        <button type="button">
+          <MdAdd color="#fff" size={20} />
+          <span>Cadastrar</span>
+        </button>
+      </header>
       <Table>
         <thead>
           <tr>
@@ -37,27 +66,18 @@ export default function Encomendas() {
           </tr>
         </thead>
         <tbody>
-          {entregas.map((entrega) => (
-            <Linha
-              key={entrega.id}
-              entregue={entrega.entregue}
-              pendente={entrega.start_date === null}
-              retirada={
-                entrega.start_date !== null && entrega.end_date === null
-              }
-              cancelada={entrega.cancelada}
-              status={entrega.status}
-            >
-              <td>{entrega.id}</td>
-              <td>{entrega.Recipient.name}</td>
-              <td>{entrega.Deliveryman.name}</td>
+          {deliveries.map((delivery) => (
+            <Linha key={delivery.id} status={delivery.status}>
+              <td>{delivery.id}</td>
+              <td>{delivery.Recipient.name}</td>
+              <td>{delivery.Deliveryman.name}</td>
               <td>Brasília</td>
               <td>Distrito Federal</td>
               <td>
-                <span>{entrega.status}</span>
+                <span>{delivery.status}</span>
               </td>
               <td>
-                <Actions delivery={entrega.id} />
+                <ActionsDelivery delivery={delivery.id} />
               </td>
             </Linha>
           ))}

@@ -5,13 +5,16 @@ import {
   MdModeEdit,
   MdDelete,
 } from 'react-icons/md';
-import ModalDetail from '../../components/ModalDetail';
+import { format, parseISO } from 'date-fns';
+import { pt } from 'date-fns/locale';
 
-import api from '../../services/api';
+import ModalDetail from '../../../components/ModalDetail';
+
+import api from '../../../services/api';
 
 import { Container, Badge, ActionList } from './styles';
 
-export default function Actions(props) {
+export default function ActionsDeliveryman(props) {
   const [visible, setVisible] = useState(false);
   const [details, setDetails] = useState({});
 
@@ -27,8 +30,27 @@ export default function Actions(props) {
 
   async function handleShowDelivery(id) {
     const response = await api.get(`deliveries/${id}`);
-    // console.log('detalhe em acion:', response.data);
-    setDetails(response.data);
+    if (response.data) {
+      const data = {
+        ...response.data,
+        dtRetirada:
+          response.data.start_date &&
+          format(parseISO(response.data.start_date), "dd'/'MM'/'yyyy", {
+            localte: pt,
+          }),
+        dtEntrega:
+          response.data.end_date &&
+          format(parseISO(response.data.end_date), "dd'/'MM'/'yyyy", {
+            localte: pt,
+          }),
+        dtCancelamento:
+          response.data.canceled_at &&
+          format(parseISO(response.data.canceled_at), "dd'/'MM'/'yyyy", {
+            localte: pt,
+          }),
+      };
+      setDetails(data);
+    }
     setOpen(true);
   }
 
@@ -39,10 +61,6 @@ export default function Actions(props) {
       </Badge>
       <ActionList visible={visible} delivery>
         <ul>
-          <li onClick={() => handleShowDelivery(props.delivery)}>
-            <MdRemoveRedEye color="#8E5BE8" size={20} />
-            <span>Visualizar</span>
-          </li>
           <li>
             <MdModeEdit color="#4D85EE" size={20} />
             <span>Editar</span>

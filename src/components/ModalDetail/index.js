@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import { Content } from './styles';
 
 function getModalStyle() {
-  const top = 50; //+ rand();
-  const left = 50; //+ rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -25,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     width: 450,
     height: 353,
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: '0',
+    borderRadius: 4,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -40,32 +39,45 @@ export default function ModalDetail(props) {
   const handleClose = props.handleClose;
 
   useEffect(() => {
-    console.log('sdfasfdasdf', delivery);
     if (props.details.id) {
-      console.log(props.details);
       setDelivery(props.details);
     }
-  }, [props.details.id]);
+  }, [props.details]);
 
   const detalhes = delivery ? (
-    <div style={modalStyle} className={classes.paper}>
+    <Content style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Informações da encomenda</h2>
       <p>
-        {delivery.Recipient.rua},{delivery.Recipient.numero}
+        {delivery.Recipient.rua}, {delivery.Recipient.numero}
       </p>
+
       <p>
         {delivery.Recipient.cidade} - {delivery.Recipient.estado}
       </p>
       <p>{delivery.Recipient.cep}</p>
-      <br />
+
+      <hr />
+
       <h2>Datas</h2>
-      <p>Retirada: {delivery.start_date}</p>
-      <p>Entrega: {delivery.end_date}</p>
-    </div>
+
+      <p>
+        <strong>Retirada:</strong> {delivery.dtRetirada}
+      </p>
+      <p>
+        <strong>Entrega:</strong> {delivery.dtEntrega}
+      </p>
+      <p>
+        <strong>Cancelamento:</strong> {delivery.dtCancelamento}
+      </p>
+
+      <hr />
+
+      <h2>Assinatura do destinatário</h2>
+    </Content>
   ) : (
-    <div style={modalStyle} className={classes.paper}>
+    <Content style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Informações da encomenda</h2>
-    </div>
+    </Content>
   );
 
   return (
