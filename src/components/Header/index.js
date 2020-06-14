@@ -20,10 +20,10 @@ export default function Header() {
       <Content>
         <nav>
           <img src={logo} alt="Logo" />
-          <Link to="/encomendas">Encomendas</Link>
-          <Link to="/entregadores">Entregadores</Link>
-          <Link to="/destinatarios">Destinatários</Link>
-          <Link to="/problemas">Problemas</Link>
+          <Link to="/deliveries">Encomendas</Link>
+          <Link to="/deliverymen">Entregadores</Link>
+          <Link to="/recipients">Destinatários</Link>
+          <Link to="/problems">Problemas</Link>
         </nav>
 
         <aside>

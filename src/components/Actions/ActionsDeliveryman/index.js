@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  MdMoreHoriz,
-  MdRemoveRedEye,
-  MdModeEdit,
-  MdDelete,
-} from 'react-icons/md';
+import { MdMoreHoriz, MdModeEdit, MdDelete } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import { pt } from 'date-fns/locale';
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
 
 import { Container, Table, Linha } from './styles';
-import api from '../../services/api';
-import ActionsDeliveryman from '../../components/Actions/ActionsDeliveryman';
+import api from '../../../services/api';
+import ActionsDeliveryman from '../../../components/Actions/ActionsDeliveryman';
 
 export default function Entregadores() {
   const [deliverymen, setDeliverymen] = useState([]);

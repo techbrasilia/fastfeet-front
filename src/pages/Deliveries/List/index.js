@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
 
 import { Container, Table, Linha } from './styles';
-import api from '../../services/api';
-import ActionsDelivery from '../../components/Actions/ActionsDelivery';
+import api from '../../../services/api';
+import ActionsDelivery from '../../../components/Actions/ActionsDelivery';
+import { Link } from 'react-router-dom';
 
 export default function Encomendas() {
   const [deliveries, setDeliveries] = useState([]);
@@ -48,10 +49,10 @@ export default function Encomendas() {
             onChange={handleSearchDelivery}
           />
         </form>
-        <button type="button">
+        <Link to="/create-delivery">
           <MdAdd color="#fff" size={20} />
           <span>Cadastrar</span>
-        </button>
+        </Link>
       </header>
       <Table>
         <thead>

@@ -13,6 +13,7 @@ import ModalDetail from '../../../components/ModalDetail';
 import api from '../../../services/api';
 
 import { Container, Badge, ActionList } from './styles';
+import { Link } from 'react-router-dom';
 
 export default function ActionsDelivery(props) {
   const [visible, setVisible] = useState(false);
@@ -54,6 +55,10 @@ export default function ActionsDelivery(props) {
     setOpen(true);
   }
 
+  function handleEditDelivery(delivery) {
+    console.log('deliv, edit: ', delivery);
+  }
+
   return (
     <Container>
       <Badge onClick={handleToggleVisible}>
@@ -66,8 +71,10 @@ export default function ActionsDelivery(props) {
             <span>Visualizar</span>
           </li>
           <li>
-            <MdModeEdit color="#4D85EE" size={20} />
-            <span>Editar</span>
+            <Link to={`edit-delivery/${props.delivery}`}>
+              <MdModeEdit color="#4D85EE" size={20} />
+              <span>Editar</span>
+            </Link>
           </li>
           <li>
             <MdDelete color="#DE3B3B" size={20} />
