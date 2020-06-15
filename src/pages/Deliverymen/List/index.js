@@ -4,6 +4,7 @@ import { MdAdd } from 'react-icons/md';
 import { Container, Table, Linha } from './styles';
 import api from '../../../services/api';
 import ActionsDeliveryman from '../../../components/Actions/ActionsDeliveryman';
+import { Link } from 'react-router-dom';
 
 export default function Entregadores() {
   const [deliverymen, setDeliverymen] = useState([]);
@@ -48,10 +49,10 @@ export default function Entregadores() {
             onChange={handleSearchDelivery}
           />
         </form>
-        <button type="button">
+        <Link to="/create-deliveryman">
           <MdAdd color="#fff" size={20} />
           <span>Cadastrar</span>
-        </button>
+        </Link>
       </header>
 
       <Table>

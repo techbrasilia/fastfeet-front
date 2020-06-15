@@ -6,14 +6,15 @@ import { MdCheck, MdArrowBack } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import api from '../../../services/api';
 import history from '../../../services/history';
+import * as Yup from 'yup';
 
 import { Container, Content } from './styles';
 
 import { createRequest } from '../../../store/modules/delivery/actions';
 
 export default function CreateDelivery(props) {
-  const [selectRecipient, setSelectRecipient] = useState('0');
-  const [selectDeliveryman, setSelectDeliveryman] = useState('0');
+  const [selectRecipient, setSelectRecipient] = useState('');
+  const [selectDeliveryman, setSelectDeliveryman] = useState('');
   const [recipients, setRecipients] = useState([]);
   const [deliverymen, setDeliverymen] = useState([]);
   const [title, setTitle] = useState('Cadastro de encomendas');
@@ -22,7 +23,6 @@ export default function CreateDelivery(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(props);
     const { delivery } = props.match.params;
     if (delivery) {
       setTitle('Edição de encomendas');
@@ -90,8 +90,6 @@ export default function CreateDelivery(props) {
     data.recipient = selectRecipient;
     data.deliveryman = selectDeliveryman;
 
-    // console.tron.log(delivery);
-    // console.tron.log(data);
     dispatch(createRequest(data));
   }
 
@@ -99,10 +97,18 @@ export default function CreateDelivery(props) {
     history.goBack();
   }
 
+  const schema = Yup.object().shape({
+    recipient: Yup.string().required('Selecione um destinatário'),
+    deliveryman: Yup.string().required('Selecione um entregador'),
+    product: Yup.string()
+      .min(3)
+      .required('O preenchimento de produto é obrigatório.'),
+  });
+
   return (
     <Container>
       <Content>
-        <Form initialData={delivery} onSubmit={handleSubmit}>
+        <Form schema={schema} initialData={delivery} onSubmit={handleSubmit}>
           <header>
             <h1>{title}</h1>
             <div>
@@ -125,7 +131,7 @@ export default function CreateDelivery(props) {
                 value={selectRecipient}
                 onChange={handleSelectRecipient}
               >
-                <option value="0">Selecione o destinatário</option>
+                <option value="">Selecione o destinatário</option>
                 {recipients.map((recipient) => (
                   <option key={recipient.id} value={recipient.id}>
                     {recipient.title}
@@ -144,7 +150,7 @@ export default function CreateDelivery(props) {
                 value={selectDeliveryman}
                 onChange={handleSelectDeliveryman}
               >
-                <option value="0">Selecione o entregador</option>
+                <option value="">Selecione o entregador</option>
                 {deliverymen.map((deliveryman) => (
                   <option key={deliveryman.id} value={deliveryman.id}>
                     {deliveryman.title}

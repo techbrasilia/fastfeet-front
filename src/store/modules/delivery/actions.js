@@ -23,16 +23,16 @@ export function createFailure() {
   };
 }
 
-export function editRequest(id) {
-  return {
-    type: '@delivery/EDIT_REQUEST',
-    payload: { id },
-  };
-}
+// export function editRequest(id) {
+//   return {
+//     type: '@delivery/EDIT_REQUEST',
+//     payload: { id },
+//   };
+// }
 
-export function editSuccess(delivery) {
-  return {
-    type: '@delivery/EDIT_SUCCESS',
-    payload: { delivery },
-  };
-}
+// export function editSuccess(delivery) {
+//   return {
+//     type: '@delivery/EDIT_SUCCESS',
+//     payload: { delivery },
+//   };
+// }
