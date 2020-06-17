@@ -59,22 +59,43 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  text-align: center;
   padding: 50px 20px;
   border-radius: 4px;
+  text-align: left;
 
   form {
     > div {
       background: #fff;
       padding: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-      grid-gap: 30px;
       margin-top: 20px;
+      text-align: left;
+
+      .endereco {
+        display: grid;
+        grid-template-columns: 55% 30%;
+        grid-gap: 20px;
+      }
+      .endereco-complemento {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+        grid-gap: 20px;
+      }
+
+      .numero {
+        width: 155px;
+      }
+
+      .complemento {
+        width: 300px;
+      }
+
+      .endereco-cidade {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+        grid-gap: 20px;
+      }
 
       div {
-        text-align: left;
-
         label {
           font-size: 14px;
           font-weight: 700;
@@ -83,11 +104,15 @@ export const Content = styled.div`
 
         input {
           width: 100%;
-          padding: 10px 15px;
           border: 1px solid #ccc;
           border-radius: 4px;
-          color: #999;
-          font-size: 16px;
+          height: 44px;
+          padding: 0 15px;
+          margin: 0 0 10px;
+
+          &::placeholder {
+            color: #999;
+          }
         }
       }
     }

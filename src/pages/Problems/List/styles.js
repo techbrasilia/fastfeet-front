@@ -6,39 +6,8 @@ export const Container = styled.div`
   font-family: 'Roboto', sans-serif;
   color: #666;
 
-  input {
-    margin-top: 25px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    height: 35px;
-    padding: 5px;
-
-    ::placeholder {
-      color: #ccc;
-    }
-  }
   h1 {
     font-size: 18px;
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    a {
-      background: #7d40e7 0% 0% no-repeat padding-box;
-      border: 0;
-      border-radius: 4px;
-      text-align: center;
-      letter-spacing: 0px;
-      color: #ffffff;
-      opacity: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 20px;
-    }
   }
 `;
 export const Table = styled.table`

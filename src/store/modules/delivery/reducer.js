@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   delivery: null,
   loading: false,
+  retorno: null,
 };
 
 export default function delivery(state = INITIAL_STATE, action) {
@@ -24,14 +25,14 @@ export default function delivery(state = INITIAL_STATE, action) {
         break;
       }
 
-      case '@delivery/EDIT_REQUEST': {
+      case '@delivery/DELETE_REQUEST': {
         draft.delivery = action.payload;
         draft.loading = true;
 
         break;
       }
-      case '@delivery/EDIT_SUCCESS': {
-        draft.delivery = action.payload.delivery;
+      case '@delivery/DELETE_SUCCESS': {
+        draft.retorno = action.payload;
         draft.loading = false;
         break;
       }

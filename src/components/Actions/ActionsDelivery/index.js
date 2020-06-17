@@ -7,19 +7,21 @@ import {
 } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import { pt } from 'date-fns/locale';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import ModalDetail from '../../../components/ModalDetail';
-
 import api from '../../../services/api';
+import { deleteRequest } from '../../../store/modules/delivery/actions';
 
 import { Container, Badge, ActionList } from './styles';
-import { Link } from 'react-router-dom';
 
 export default function ActionsDelivery(props) {
   const [visible, setVisible] = useState(false);
   const [details, setDetails] = useState({});
-
   const [open, setOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
@@ -55,8 +57,15 @@ export default function ActionsDelivery(props) {
     setOpen(true);
   }
 
-  function handleEditDelivery(delivery) {
-    console.log('deliv, edit: ', delivery);
+  function handleDeleteDelivery(id) {
+    var r = window.confirm('Deseja deletar a encomenda!');
+    if (r == true) {
+      // console.tron.log('id deletado: ', id);
+      // return;
+      dispatch(deleteRequest(id));
+    } else {
+      alert('Não deletando!');
+    }
   }
 
   return (
@@ -70,13 +79,13 @@ export default function ActionsDelivery(props) {
             <MdRemoveRedEye color="#8E5BE8" size={20} />
             <span>Visualizar</span>
           </li>
-          <li>
-            <Link to={`edit-delivery/${props.delivery}`}>
+          <Link to={`edit-delivery/${props.delivery}`}>
+            <li>
               <MdModeEdit color="#4D85EE" size={20} />
               <span>Editar</span>
-            </Link>
-          </li>
-          <li>
+            </li>
+          </Link>
+          <li onClick={() => handleDeleteDelivery(props.delivery)}>
             <MdDelete color="#DE3B3B" size={20} />
             <span>Excluir</span>
           </li>

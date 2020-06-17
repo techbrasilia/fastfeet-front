@@ -23,6 +23,26 @@ export function createFailure() {
   };
 }
 
+export function deleteRequest(id) {
+  return {
+    type: '@delivery/DELETE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteSuccess(data) {
+  return {
+    type: '@delivery/DELETE_SUCCESS',
+    payload: { data },
+  };
+}
+
+export function deleteFailure() {
+  return {
+    type: '@delivery/DELETE_FAILURE',
+  };
+}
+
 // export function editRequest(id) {
 //   return {
 //     type: '@delivery/EDIT_REQUEST',

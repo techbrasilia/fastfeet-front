@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { useDispatch } from 'react-redux';
+import AsyncSelect from 'react-select';
 
 import { MdCheck, MdArrowBack } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -23,15 +24,21 @@ export default function CreateDelivery(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { delivery } = props.match.params;
-    if (delivery) {
+    const delivery_id = props.match.params.delivery;
+    if (delivery_id) {
       setTitle('Edição de encomendas');
 
       async function loadDelivery() {
-        const response = await api.get(`deliveries/${delivery}`);
+        const response = await api.get(`deliveries/${delivery_id}`);
 
-        setSelectRecipient(response.data.recipient_id);
-        setSelectDeliveryman(response.data.deliveryman_id);
+        setSelectRecipient({
+          value: response.data.Recipient.id,
+          label: response.data.Recipient.name,
+        });
+        setSelectDeliveryman({
+          value: response.data.Deliveryman.id,
+          label: response.data.Deliveryman.name,
+        });
         setDelivery(response.data);
       }
 
@@ -45,8 +52,8 @@ export default function CreateDelivery(props) {
 
       const data = response.data.map((recip) => {
         return {
-          id: recip.id,
-          title: recip.name,
+          value: recip.id,
+          label: recip.name,
         };
       });
 
@@ -62,8 +69,8 @@ export default function CreateDelivery(props) {
 
       const data = response.data.map((recip) => {
         return {
-          id: recip.id,
-          title: recip.name,
+          value: recip.id,
+          label: recip.name,
         };
       });
 
@@ -74,21 +81,21 @@ export default function CreateDelivery(props) {
   }, []);
 
   function handleSelectRecipient(event) {
-    const recipient = event.target.value;
+    const recipient = event;
     setSelectRecipient(recipient);
   }
 
   function handleSelectDeliveryman(event) {
-    const deliveryman = event.target.value;
+    const deliveryman = event;
     setSelectDeliveryman(deliveryman);
   }
 
   async function handleSubmit(data) {
+    data.recipient = selectRecipient.value;
+    data.deliveryman = selectDeliveryman.value;
     if (delivery.id) {
       data.id = delivery.id;
     }
-    data.recipient = selectRecipient;
-    data.deliveryman = selectDeliveryman;
 
     dispatch(createRequest(data));
   }
@@ -98,8 +105,6 @@ export default function CreateDelivery(props) {
   }
 
   const schema = Yup.object().shape({
-    recipient: Yup.string().required('Selecione um destinatário'),
-    deliveryman: Yup.string().required('Selecione um entregador'),
     product: Yup.string()
       .min(3)
       .required('O preenchimento de produto é obrigatório.'),
@@ -125,38 +130,29 @@ export default function CreateDelivery(props) {
           <div>
             <div>
               <label>Destinatário</label>
-              <select
+              <AsyncSelect
                 name="recipient"
                 id="recipient"
                 value={selectRecipient}
+                options={recipients}
+                placeholder="Selecione um destinatário"
                 onChange={handleSelectRecipient}
-              >
-                <option value="">Selecione o destinatário</option>
-                {recipients.map((recipient) => (
-                  <option key={recipient.id} value={recipient.id}>
-                    {recipient.title}
-                  </option>
-                ))}
-              </select>
-
-              <label>Nome do produto</label>
-              <Input type="text" name="product" />
+              />
             </div>
             <div>
               <label>Entregador</label>
-              <select
+              <AsyncSelect
                 name="deliveryman"
                 id="deliveryman"
                 value={selectDeliveryman}
+                options={deliverymen}
+                placeholder="Selecione um entregador"
                 onChange={handleSelectDeliveryman}
-              >
-                <option value="">Selecione o entregador</option>
-                {deliverymen.map((deliveryman) => (
-                  <option key={deliveryman.id} value={deliveryman.id}>
-                    {deliveryman.title}
-                  </option>
-                ))}
-              </select>
+              />
+            </div>
+            <div>
+              <label>Nome do produto</label>
+              <Input type="text" name="product" />
             </div>
           </div>
         </Form>

@@ -46,6 +46,15 @@ export const Table = styled.table`
   width: 100%;
   margin-top: 25px;
   border-spacing: 0 10px;
+  text-align: left;
+
+  th {
+    padding: 10px;
+  }
+
+  th:last-child {
+    text-align: center;
+  }
 `;
 
 export const Linha = styled.tr`
@@ -55,7 +64,8 @@ export const Linha = styled.tr`
   opacity: 1;
 
   td {
-    text-align: center;
+    text-align: left;
+    padding: 10px;
 
     > span {
       color: ${(props) => {
@@ -74,5 +84,9 @@ export const Linha = styled.tr`
         return '';
       }};
     }
+  }
+
+  td:last-child {
+    text-align: center;
   }
 `;

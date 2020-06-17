@@ -19,12 +19,13 @@ export default function CreateDeliveryman(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { deliveryman } = props.match.params;
-    if (deliveryman) {
+    const deliveryman_id = props.match.params.deliveryman;
+    console.log('deliveryman:', deliveryman_id);
+    if (deliveryman_id) {
       setTitle('Edição de entregadores');
 
       async function loadDeliveryman() {
-        const response = await api.get(`deliverymen/${deliveryman}`);
+        const response = await api.get(`deliverymen/${deliveryman_id}`);
         setDeliveryman(response.data);
       }
 

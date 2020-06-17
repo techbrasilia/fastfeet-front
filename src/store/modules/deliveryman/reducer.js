@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   loading: false,
 };
 
-export default function delivery(state = INITIAL_STATE, action) {
+export default function deliveryman(state = INITIAL_STATE, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case '@deliveryman/CREATE_REQUEST': {
