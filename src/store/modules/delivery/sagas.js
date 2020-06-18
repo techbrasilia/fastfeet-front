@@ -68,7 +68,7 @@ export function* excluir({ payload }) {
     yield put(deleteSuccess(response.data));
 
     toast.success('Encomenda excluída com sucesso.');
-    history.push('deliveries');
+    history.push({ pathname: '/deliveries' });
   } catch (error) {
     toast.error('Falha ao excluir encomenda.');
     yield put(deleteFailure());
