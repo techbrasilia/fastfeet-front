@@ -39,7 +39,7 @@ export default function CreateDelivery(props) {
           value: response.data.Deliveryman.id,
           label: response.data.Deliveryman.name,
         });
-        setDelivery(response.data);
+        setDelivery(response.data.dados);
       }
 
       loadDelivery();
@@ -67,7 +67,7 @@ export default function CreateDelivery(props) {
     async function loadDeliverymen() {
       const response = await api.get('deliverymen');
 
-      const data = response.data.map((recip) => {
+      const data = response.data.dados.map((recip) => {
         return {
           value: recip.id,
           label: recip.name,

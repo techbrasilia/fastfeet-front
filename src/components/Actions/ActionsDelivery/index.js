@@ -60,8 +60,6 @@ export default function ActionsDelivery(props) {
   function handleDeleteDelivery(id) {
     var r = window.confirm('Deseja deletar a encomenda!');
     if (r == true) {
-      // console.tron.log('id deletado: ', id);
-      // return;
       dispatch(deleteRequest(id));
     } else {
       alert('Não deletando!');

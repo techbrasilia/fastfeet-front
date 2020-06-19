@@ -5,7 +5,12 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 import history from '../../../services/history';
 
-import { createSuccess, createFailure } from './actions';
+import {
+  createSuccess,
+  createFailure,
+  deleteSuccess,
+  deleteFailure,
+} from './actions';
 
 export function* create({ payload }) {
   try {
@@ -47,4 +52,28 @@ export function* create({ payload }) {
   }
 }
 
-export default all([takeLatest('@deliveryman/CREATE_REQUEST', create)]);
+export function* excluir({ payload }) {
+  try {
+    const { id } = payload;
+
+    const response = yield call(api.delete, `deliverymen/${id}`);
+
+    if (!response) {
+      toast.error('Erro ao excluir entregador.');
+      return;
+    }
+
+    yield put(deleteSuccess(response.data));
+
+    toast.success('Entregador excluído com sucesso.');
+    history.push({ pathname: '/deliverymen' });
+  } catch (error) {
+    toast.error('Falha ao excluir entregador.');
+    yield put(deleteFailure());
+  }
+}
+
+export default all([
+  takeLatest('@deliveryman/CREATE_REQUEST', create),
+  takeLatest('@deliveryman/DELETE_REQUEST', excluir),
+]);

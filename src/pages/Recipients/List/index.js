@@ -1,14 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 
 import { Container, Table, Linha } from './styles';
 import api from '../../../services/api';
 import ActionsRecipient from '../../../components/Actions/ActionsRecipient';
 import { Link } from 'react-router-dom';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
 export default function Destinatarios() {
   const [recipients, setRecipients] = useState([]);
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [itensPorPagina, setItensPorPagina] = useState(10);
+  const [totalPaginas, setTotalPaginas] = useState(0);
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (search) {
@@ -18,7 +33,8 @@ export default function Destinatarios() {
             params: { q: search },
           })
           .then((response) => {
-            setRecipients(response.data);
+            setRecipients(response.data.dados);
+            setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
           });
       }
 
@@ -26,16 +42,21 @@ export default function Destinatarios() {
     } else {
       async function loadRecipients() {
         await api.get('recipients').then((response) => {
-          setRecipients(response.data);
+          setRecipients(response.data.dados);
+          setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
         });
       }
       loadRecipients();
     }
-  }, [search]);
+  }, [search, page]);
 
   function handleSearchDelivery(s) {
     setSearch(s.target.value);
   }
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   return (
     <Container>
@@ -80,6 +101,14 @@ export default function Destinatarios() {
           ))}
         </tbody>
       </Table>
+      <div className={classes.root}>
+        <Pagination
+          count={totalPaginas}
+          shape="rounded"
+          page={page}
+          onChange={handleChange}
+        />
+      </div>
     </Container>
   );
 }

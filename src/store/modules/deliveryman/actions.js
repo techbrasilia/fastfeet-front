@@ -21,3 +21,23 @@ export function createFailure() {
     type: '@deliveryman/CREATE_FAILURE',
   };
 }
+
+export function deleteRequest(id) {
+  return {
+    type: '@deliveryman/DELETE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteSuccess(data) {
+  return {
+    type: '@deliveryman/DELETE_SUCCESS',
+    payload: { data },
+  };
+}
+
+export function deleteFailure() {
+  return {
+    type: '@deliveryman/DELETE_FAILURE',
+  };
+}

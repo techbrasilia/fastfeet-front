@@ -24,14 +24,14 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         break;
       }
 
-      case '@deliveryman/EDIT_REQUEST': {
+      case '@deliveryman/DELETE_REQUEST': {
         draft.deliveryman = action.payload;
         draft.loading = true;
 
         break;
       }
-      case '@deliveryman/EDIT_SUCCESS': {
-        draft.deliveryman = action.payload.deliveryman;
+      case '@deliveryman/DELETE_SUCCESS': {
+        draft.retorno = action.payload;
         draft.loading = false;
         break;
       }

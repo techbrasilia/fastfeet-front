@@ -34,6 +34,7 @@ export default function Encomendas() {
           })
           .then((response) => {
             setDeliveries(response.data.dados);
+            setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
           });
       }
 
@@ -47,13 +48,6 @@ export default function Encomendas() {
           .then((response) => {
             setDeliveries(response.data.dados);
             setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
-
-            // console.log(
-            //   'dd',
-            //   response.data.dados.length,
-            //   'mat:',
-            //   Math.ceil(response.data.count / itensPorPagina)
-            // );
           });
       }
       loadDeliveries();

@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { MdMoreHoriz, MdModeEdit, MdDelete } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { Container, Badge, ActionList } from './styles';
-import { Link } from 'react-router-dom';
+import { deleteRequest } from '../../../store/modules/deliveryman/actions';
 
 export default function ActionsDeliveryman(props) {
   const [visible, setVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  function handleDeleteDeliveryman(id) {
+    var r = window.confirm('Deseja deletar a encomenda!');
+    if (r == true) {
+      dispatch(deleteRequest(id));
+    } else {
+      alert('Não deletando!');
+    }
   }
 
   return (
@@ -24,7 +37,7 @@ export default function ActionsDeliveryman(props) {
               <span>Editar</span>
             </li>
           </Link>
-          <li>
+          <li onClick={() => handleDeleteDeliveryman(props.deliveryman)}>
             <MdDelete color="#DE3B3B" size={20} />
             <span>Excluir</span>
           </li>
