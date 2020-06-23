@@ -26,3 +26,23 @@ export function createFailure() {
     type: '@recipient/CREATE_FAILURE',
   };
 }
+
+export function deleteRequest(id) {
+  return {
+    type: '@recipient/DELETE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteSuccess(data) {
+  return {
+    type: '@recipient/DELETE_SUCCESS',
+    payload: { data },
+  };
+}
+
+export function deleteFailure() {
+  return {
+    type: '@recipient/DELETE_FAILURE',
+  };
+}

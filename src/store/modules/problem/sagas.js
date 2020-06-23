@@ -5,7 +5,12 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 import history from '../../../services/history';
 
-import { createSuccess, createFailure } from './actions';
+import {
+  createSuccess,
+  createFailure,
+  updateSuccess,
+  updateFailure,
+} from './actions';
 
 export function* create({ payload }) {
   try {
@@ -49,4 +54,27 @@ export function* create({ payload }) {
   }
 }
 
-export default all([takeLatest('@problem/CREATE_REQUEST', create)]);
+export function* update({ payload }) {
+  try {
+    const { id } = payload;
+
+    const response = yield call(api.delete, `problem/${id}/cancel_delivery`);
+
+    if (!response) {
+      toast.error('Erro ao cancelar encomenda.');
+      return;
+    }
+
+    yield put(updateSuccess(response.data));
+    toast.success('Encomenda cancelada com sucesso.');
+    history.push({ pathname: '/problems' });
+  } catch (error) {
+    toast.error('Falha ao cancelar encomenda.');
+    yield put(updateFailure());
+  }
+}
+
+export default all([
+  takeLatest('@problem/CREATE_REQUEST', create),
+  takeLatest('@problem/UPDATE_REQUEST', update),
+]);

@@ -23,14 +23,13 @@ export default function problem(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
-
-      case '@problem/EDIT_REQUEST': {
+      case '@problem/UPDATE_REQUEST': {
         draft.problem = action.payload;
         draft.loading = true;
 
         break;
       }
-      case '@problem/EDIT_SUCCESS': {
+      case '@problem/UPDATE_SUCCESS': {
         draft.problem = action.payload.problem;
         draft.loading = false;
         break;

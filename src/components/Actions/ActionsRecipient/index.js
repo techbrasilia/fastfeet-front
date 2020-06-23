@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import { MdMoreHoriz, MdModeEdit, MdDelete } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { Container, Badge, ActionList } from './styles';
-import { Link } from 'react-router-dom';
+import { deleteRequest } from '../../../store/modules/recipient/actions';
 
 export default function ActionsRecipient(props) {
   const [visible, setVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  function handleDeleteRecipient(id) {
+    var r = window.confirm('Deseja excluir o destinatário!');
+    if (r == true) {
+      dispatch(deleteRequest(id));
+    }
   }
 
   return (
@@ -24,7 +35,7 @@ export default function ActionsRecipient(props) {
               <span>Editar</span>
             </li>
           </Link>
-          <li>
+          <li onClick={() => handleDeleteRecipient(props.recipient)}>
             <MdDelete color="#DE3B3B" size={20} />
             <span>Excluir</span>
           </li>

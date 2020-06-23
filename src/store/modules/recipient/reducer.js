@@ -24,14 +24,18 @@ export default function recipient(state = INITIAL_STATE, action) {
         break;
       }
 
-      case '@recipient/EDIT_REQUEST': {
+      case '@recipient/DELETE_REQUEST': {
         draft.recipient = action.payload;
         draft.loading = true;
 
         break;
       }
-      case '@recipient/EDIT_SUCCESS': {
-        draft.recipient = action.payload.recipient;
+      case '@recipient/DELETE_SUCCESS': {
+        draft.retorno = action.payload;
+        draft.loading = false;
+        break;
+      }
+      case '@recipient/DELETE_FAILURE': {
         draft.loading = false;
         break;
       }

@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { Container, Badge, ActionList } from './styles';
-import { deleteRequest } from '../../../store/modules/deliveryman/actions';
+import {
+  deleteRequest,
+  editRequest,
+} from '../../../store/modules/deliveryman/actions';
 
 export default function ActionsDeliveryman(props) {
   const [visible, setVisible] = useState(false);
@@ -16,12 +19,14 @@ export default function ActionsDeliveryman(props) {
   }
 
   function handleDeleteDeliveryman(id) {
-    var r = window.confirm('Deseja deletar a encomenda!');
+    var r = window.confirm('Deseja excluir a encomenda?');
     if (r == true) {
       dispatch(deleteRequest(id));
-    } else {
-      alert('Não deletando!');
     }
+  }
+
+  function editDeliveryman(id) {
+    dispatch(editRequest(id));
   }
 
   return (
@@ -31,12 +36,10 @@ export default function ActionsDeliveryman(props) {
       </Badge>
       <ActionList visible={visible} deliveryman>
         <ul>
-          <Link to={`edit-deliveryman/${props.deliveryman}`}>
-            <li>
-              <MdModeEdit color="#4D85EE" size={20} />
-              <span>Editar</span>
-            </li>
-          </Link>
+          <li onClick={() => editDeliveryman(props.deliveryman)}>
+            <MdModeEdit color="#4D85EE" size={20} />
+            <span>Editar</span>
+          </li>
           <li onClick={() => handleDeleteDeliveryman(props.deliveryman)}>
             <MdDelete color="#DE3B3B" size={20} />
             <span>Excluir</span>

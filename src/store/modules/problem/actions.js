@@ -21,3 +21,23 @@ export function createFailure() {
     type: '@problem/CREATE_FAILURE',
   };
 }
+
+export function updateRequest(id) {
+  return {
+    type: '@problem/UPDATE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function updateSuccess(problem) {
+  return {
+    type: '@problem/UPDATE_SUCCESS',
+    payload: { problem },
+  };
+}
+
+export function updateFailure() {
+  return {
+    type: '@problem/UPDATE_FAILURE',
+  };
+}

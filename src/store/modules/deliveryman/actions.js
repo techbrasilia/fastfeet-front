@@ -5,6 +5,7 @@ export function createRequest(data) {
       id: data.id ? data.id : null,
       name: data.name,
       email: data.email,
+      avatar_id: data.avatar_id,
     },
   };
 }
@@ -39,5 +40,40 @@ export function deleteSuccess(data) {
 export function deleteFailure() {
   return {
     type: '@deliveryman/DELETE_FAILURE',
+  };
+}
+
+export function listRequest(search, page) {
+  return {
+    type: '@deliveryman/LIST_REQUEST',
+    payload: {
+      search,
+      page,
+    },
+  };
+}
+
+export function listSuccess(data) {
+  return {
+    type: '@deliveryman/LIST_SUCCESS',
+    payload: { data },
+  };
+}
+
+export function editRequest(id) {
+  return {
+    type: '@deliveryman/EDIT_REQUEST',
+    payload: {
+      id,
+    },
+  };
+}
+
+export function editSuccess(data) {
+  return {
+    type: '@deliveryman/EDIT_SUCCESS',
+    payload: {
+      data,
+    },
   };
 }

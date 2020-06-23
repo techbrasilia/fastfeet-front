@@ -1,43 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { MdCheck, MdArrowBack } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import api from '../../../services/api';
+
 import history from '../../../services/history';
 import * as Yup from 'yup';
 
 import { Container, Content } from './styles';
-
 import { createRequest } from '../../../store/modules/deliveryman/actions';
+import AvatarInput from '../AvatarInput';
+import api from '../../../services/api';
+import { useMemo } from 'react';
 
 export default function CreateDeliveryman(props) {
   const [title, setTitle] = useState('Cadastro de entregadores');
-  const [deliveryman, setDeliveryman] = useState({});
+
+  let deliveryman = useSelector((state) => state.deliveryman.deliveryman);
+
+  if (!props.match.params.deliveryman) {
+    deliveryman = {};
+  }
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const deliveryman_id = props.match.params.deliveryman;
-    console.log('deliveryman:', deliveryman_id);
-    if (deliveryman_id) {
+    if (deliveryman) {
       setTitle('Edição de entregadores');
-
-      async function loadDeliveryman() {
-        const response = await api.get(`deliverymen/${deliveryman_id}`);
-        setDeliveryman(response.data);
-      }
-
-      loadDeliveryman();
     }
-  }, []);
+  });
 
   async function handleSubmit(data) {
     if (deliveryman.id) {
       data.id = deliveryman.id;
     }
-
     dispatch(createRequest(data));
   }
 
@@ -46,6 +43,7 @@ export default function CreateDeliveryman(props) {
   }
 
   const schema = Yup.object().shape({
+    avatar_id: Yup.number(),
     name: Yup.string().min(3).required('O nome é obrigatório'),
     email: Yup.string().email().required('O e-mail é obrigatório'),
   });
@@ -53,7 +51,7 @@ export default function CreateDeliveryman(props) {
   return (
     <Container>
       <Content>
-        <Form schema={schema} initialData={deliveryman} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} schema={schema} initialData={deliveryman}>
           <header>
             <h1>{title}</h1>
             <div>
@@ -68,6 +66,7 @@ export default function CreateDeliveryman(props) {
             </div>
           </header>
           <div>
+            <AvatarInput name="avatar_id" />
             <label>Nome</label>
             <Input type="text" name="name" placeholder="Nome do entregador" />
             <label>E-mail</label>

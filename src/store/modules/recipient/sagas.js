@@ -5,14 +5,18 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 import history from '../../../services/history';
 
-import { createSuccess, createFailure } from './actions';
+import {
+  createSuccess,
+  createFailure,
+  deleteSuccess,
+  deleteFailure,
+} from './actions';
 
 export function* create({ payload }) {
   try {
     const { id, name, rua, numero, complemento, estado, cidade, cep } = payload;
 
     if (id) {
-      console.log('atualizacao f: ', payload);
       const response = yield call(api.put, `recipients/${id}`, {
         name,
         rua,
@@ -58,4 +62,30 @@ export function* create({ payload }) {
   }
 }
 
-export default all([takeLatest('@recipient/CREATE_REQUEST', create)]);
+export function* excluir({ payload }) {
+  try {
+    const { id } = payload;
+
+    const response = yield call(api.delete, `recipients/${id}`);
+
+    if (!response) {
+      toast.error('Erro ao excluir destinatário.');
+      return;
+    }
+
+    yield put(deleteSuccess(response.data));
+
+    toast.success(response.data.message);
+    history.push({ pathname: '/recipients' });
+  } catch (error) {
+    toast.error(
+      error.response.data.message + '\n\r' + error.response.data.description
+    );
+    yield put(deleteFailure());
+  }
+}
+
+export default all([
+  takeLatest('@recipient/CREATE_REQUEST', create),
+  takeLatest('@recipient/DELETE_REQUEST', excluir),
+]);

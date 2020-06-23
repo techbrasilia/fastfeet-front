@@ -47,13 +47,19 @@ export default function ModalDetail(props) {
     <Content style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Informações da encomenda</h2>
       <p>
-        {delivery.Recipient.rua}, {delivery.Recipient.numero}
+        {`${
+          delivery.Recipient != null
+            ? delivery.Recipient.rua + ',' + delivery.Recipient.numero
+            : ''
+        }`}
       </p>
 
       <p>
-        {delivery.Recipient.cidade} - {delivery.Recipient.estado}
+        {delivery.Recipient
+          ? delivery.Recipient.cidade + ' - ' + delivery.Recipient.estado
+          : ''}
       </p>
-      <p>{delivery.Recipient.cep}</p>
+      <p>{`${delivery.Recipient != null ? delivery.Recipient.cep : ''}`}</p>
 
       <hr />
 

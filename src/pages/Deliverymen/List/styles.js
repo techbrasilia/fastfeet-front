@@ -66,6 +66,26 @@ export const Linha = styled.tr`
   td {
     text-align: left;
     padding: 10px;
+
+    img {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+    }
+
+    .iniciais {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 5px;
+      color: #a28fd0;
+      background: #f4effc 0% 0% no-repeat padding-box;
+      opacity: 1;
+      text-align: center;
+      align-self: center;
+      vertical-align: middle;
+      padding: 8px;
+    }
   }
 
   td:last-child {

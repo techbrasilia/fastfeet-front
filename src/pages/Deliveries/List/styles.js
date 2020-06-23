@@ -67,7 +67,34 @@ export const Linha = styled.tr`
     text-align: left;
     padding: 10px;
 
-    > span {
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: initial;
+
+      img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+
+      .iniciais {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-right: 5px;
+        color: #a28fd0;
+        background: #f4effc 0% 0% no-repeat padding-box;
+        opacity: 1;
+        text-align: center;
+        align-self: center;
+        vertical-align: middle;
+        padding: 8px;
+      }
+    }
+
+    .status {
       color: ${(props) => {
         if (props.status === 'Cancelada') {
           return '#DE3B3B';

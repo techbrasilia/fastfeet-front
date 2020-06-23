@@ -38,7 +38,6 @@ export default function CreateRecipient(props) {
       data.id = recipient.id;
     }
 
-    console.log(data);
     dispatch(createRequest(data));
   }
 

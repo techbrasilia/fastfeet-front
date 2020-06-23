@@ -26,28 +26,25 @@ export default function Entregadores() {
   const classes = useStyles();
 
   useEffect(() => {
-    if (search) {
-      async function searchDeliverymen() {
-        await api
-          .get('deliverymen', {
-            params: { q: search },
-          })
-          .then((response) => {
-            setDeliverymen(response.data.dados);
-            setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
-          });
-      }
+    async function searchDeliverymen() {
+      const response = await api.get('deliverymen', {
+        params: { q: search, page },
+      });
 
-      searchDeliverymen();
-    } else {
-      async function loadDeliverymen() {
-        await api.get('deliverymen').then((response) => {
-          setDeliverymen(response.data.dados);
-          setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
-        });
-      }
-      loadDeliverymen();
+      const data = response.data.dados.map((res) => {
+        return {
+          ...res,
+          iniciais:
+            res.name.split(' ')[0].substring(0, 1) +
+            '' +
+            res.name.split(' ')[res.name.split(' ').length - 1].substring(0, 1),
+        };
+      });
+      setDeliverymen(data);
+      setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
     }
+
+    searchDeliverymen();
   }, [search, page]);
 
   function handleSearchDelivery(s) {
@@ -90,7 +87,15 @@ export default function Entregadores() {
           {deliverymen.map((deliveryman) => (
             <Linha key={deliveryman.id}>
               <td>{deliveryman.id}</td>
-              <td>{deliveryman.avatar_id}</td>
+              <td>
+                {deliveryman.avatar ? (
+                  <img src={deliveryman.avatar.url} alt="" />
+                ) : (
+                  <div className="iniciais">
+                    {deliveryman.iniciais.toUpperCase()}
+                  </div>
+                )}
+              </td>
               <td>{deliveryman.name}</td>
               <td>{deliveryman.email}</td>
               <td>

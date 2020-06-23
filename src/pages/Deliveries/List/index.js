@@ -26,32 +26,28 @@ export default function Encomendas() {
   const classes = useStyles();
 
   useEffect(() => {
-    if (search) {
-      async function searchDeliveries() {
-        await api
-          .get('deliveries', {
-            params: { q: search, page },
-          })
-          .then((response) => {
-            setDeliveries(response.data.dados);
-            setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
-          });
-      }
+    async function searchDeliveries() {
+      const response = await api.get('deliveries', {
+        params: { q: search, page },
+      });
+      const data = response.data.dados.map((res) => {
+        return {
+          ...res,
+          iniciais: res.Deliveryman
+            ? res.Deliveryman.name.split(' ')[0].substring(0, 1) +
+              '' +
+              res.Deliveryman.name
+                .split(' ')
+                [res.Deliveryman.name.split(' ').length - 1].substring(0, 1)
+            : '',
+        };
+      });
 
-      searchDeliveries();
-    } else {
-      async function loadDeliveries() {
-        await api
-          .get('deliveries', {
-            params: { page },
-          })
-          .then((response) => {
-            setDeliveries(response.data.dados);
-            setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
-          });
-      }
-      loadDeliveries();
+      setDeliveries(data);
+      setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
     }
+
+    searchDeliveries();
   }, [search, page]);
 
   function handleSearchDelivery(s) {
@@ -95,12 +91,25 @@ export default function Encomendas() {
           {deliveries.map((delivery) => (
             <Linha key={delivery.id} status={delivery.status}>
               <td>{delivery.id}</td>
-              <td>{delivery.Recipient.name}</td>
-              <td>{delivery.Deliveryman.name}</td>
-              <td>Brasília</td>
-              <td>Distrito Federal</td>
+              <td>{delivery.Recipient && delivery.Recipient.name}</td>
               <td>
-                <span>{delivery.status}</span>
+                <span>
+                  {delivery.Deliveryman && delivery.Deliveryman.avatar ? (
+                    <img src={delivery.Deliveryman.avatar.url} alt="" />
+                  ) : (
+                    delivery.Deliveryman && (
+                      <div className="iniciais">
+                        {delivery.iniciais.toUpperCase()}
+                      </div>
+                    )
+                  )}
+                  {delivery.Deliveryman && delivery.Deliveryman.name}
+                </span>
+              </td>
+              <td>{delivery.Recipient && delivery.Recipient.cidade}</td>
+              <td>{delivery.Recipient && delivery.Recipient.estado}</td>
+              <td>
+                <span className="status">{delivery.status}</span>
               </td>
               <td>
                 <ActionsDelivery delivery={delivery.id} />

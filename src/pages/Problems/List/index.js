@@ -53,7 +53,7 @@ export default function Problemas() {
               <td>{problem.delivery_id}</td>
               <td>{problem.description}</td>
               <td>
-                <ActionsProblem problem={problem.delivery_id} />
+                <ActionsProblem problem={problem.id} />
               </td>
             </Linha>
           ))}

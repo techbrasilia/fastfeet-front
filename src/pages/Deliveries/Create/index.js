@@ -32,14 +32,15 @@ export default function CreateDelivery(props) {
         const response = await api.get(`deliveries/${delivery_id}`);
 
         setSelectRecipient({
-          value: response.data.Recipient.id,
-          label: response.data.Recipient.name,
+          value: response.data.Recipient && response.data.Recipient.id,
+          label: response.data.Recipient && response.data.Recipient.name,
         });
         setSelectDeliveryman({
-          value: response.data.Deliveryman.id,
-          label: response.data.Deliveryman.name,
+          value: response.data.Deliveryman && response.data.Deliveryman.id,
+          label: response.data.Deliveryman && response.data.Deliveryman.name,
         });
-        setDelivery(response.data.dados);
+
+        setDelivery(response.data);
       }
 
       loadDelivery();
@@ -50,7 +51,7 @@ export default function CreateDelivery(props) {
     async function loadRecipients() {
       const response = await api.get('recipients');
 
-      const data = response.data.map((recip) => {
+      const data = response.data.dados.map((recip) => {
         return {
           value: recip.id,
           label: recip.name,
