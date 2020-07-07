@@ -79,7 +79,9 @@ export default function ModalDetail(props) {
 
       <h2>Assinatura do destinatário</h2>
       <Signature>
-        <img src={delivery.signature && delivery.signature.url} alt="Avatar" />
+        {delivery.signature && (
+          <img src={delivery.signature.url} alt="Assinatura" />
+        )}
       </Signature>
     </Content>
   ) : (
