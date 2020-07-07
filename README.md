@@ -2,3 +2,5 @@ Este projeto é o módulo web do desafio do curso Bootcamp - GoStack da Rocketse
 
 #Instalação das dependências através do Yarn.
 #Iniciar o módulo back-end antes deste.
+
+#Aluno: Fábio Rodrigues de Carvalho
