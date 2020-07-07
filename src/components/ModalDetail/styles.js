@@ -18,3 +18,14 @@ export const Content = styled.div`
     margin-top: 10px;
   }
 `;
+
+export const Signature = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 200px;
+    max-height: 65px;
+  }
+`;

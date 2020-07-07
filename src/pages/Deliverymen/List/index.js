@@ -20,7 +20,7 @@ export default function Entregadores() {
   const [deliverymen, setDeliverymen] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [itensPorPagina, setItensPorPagina] = useState(10);
+  const [itensPorPagina, setItensPorPagina] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);
 
   const classes = useStyles();
@@ -41,11 +41,12 @@ export default function Entregadores() {
         };
       });
       setDeliverymen(data);
+      setItensPorPagina(10);
       setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
     }
 
     searchDeliverymen();
-  }, [search, page]);
+  }, [search, page, itensPorPagina]);
 
   function handleSearchDelivery(s) {
     setSearch(s.target.value);

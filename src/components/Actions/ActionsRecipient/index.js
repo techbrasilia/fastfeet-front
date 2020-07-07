@@ -17,7 +17,7 @@ export default function ActionsRecipient(props) {
 
   function handleDeleteRecipient(id) {
     var r = window.confirm('Deseja excluir o destinatário!');
-    if (r == true) {
+    if (r === true) {
       dispatch(deleteRequest(id));
     }
   }

@@ -31,7 +31,7 @@ export default function ActionsProblem(props) {
 
   async function handleCancelDelivery(id) {
     var r = window.confirm('Deseja cancelar a encomenda?');
-    if (r == true) {
+    if (r === true) {
       dispatch(updateRequest(id));
     }
   }

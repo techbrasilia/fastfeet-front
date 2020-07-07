@@ -31,7 +31,7 @@ export default function CreateRecipient(props) {
 
       loadRecipient();
     }
-  }, []);
+  }, [props]);
 
   async function handleSubmit(data) {
     if (recipient.id) {

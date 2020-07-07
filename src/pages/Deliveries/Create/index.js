@@ -45,7 +45,7 @@ export default function CreateDelivery(props) {
 
       loadDelivery();
     }
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     async function loadRecipients() {

@@ -20,7 +20,7 @@ export default function Encomendas() {
   const [deliveries, setDeliveries] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [itensPorPagina, setItensPorPagina] = useState(10);
+  const [itensPorPagina, setItensPorPagina] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);
 
   const classes = useStyles();
@@ -44,11 +44,12 @@ export default function Encomendas() {
       });
 
       setDeliveries(data);
+      setItensPorPagina(10);
       setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
     }
 
     searchDeliveries();
-  }, [search, page]);
+  }, [search, page, itensPorPagina]);
 
   function handleSearchDelivery(s) {
     setSearch(s.target.value);

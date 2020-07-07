@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
-import { Content } from './styles';
+import { Content, Signature } from './styles';
 
 function getModalStyle() {
   const top = 50;
@@ -78,6 +78,9 @@ export default function ModalDetail(props) {
       <hr />
 
       <h2>Assinatura do destinatário</h2>
+      <Signature>
+        <img src={delivery.signature && delivery.signature.url} alt="Avatar" />
+      </Signature>
     </Content>
   ) : (
     <Content style={modalStyle} className={classes.paper}>

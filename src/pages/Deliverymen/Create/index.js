@@ -11,8 +11,6 @@ import * as Yup from 'yup';
 import { Container, Content } from './styles';
 import { createRequest } from '../../../store/modules/deliveryman/actions';
 import AvatarInput from '../AvatarInput';
-import api from '../../../services/api';
-import { useMemo } from 'react';
 
 export default function CreateDeliveryman(props) {
   const [title, setTitle] = useState('Cadastro de entregadores');
@@ -29,7 +27,7 @@ export default function CreateDeliveryman(props) {
     if (deliveryman) {
       setTitle('Edição de entregadores');
     }
-  });
+  }, [title, deliveryman]);
 
   async function handleSubmit(data) {
     if (deliveryman.id) {

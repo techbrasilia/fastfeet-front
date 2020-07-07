@@ -59,7 +59,7 @@ export default function ActionsDelivery(props) {
 
   function handleDeleteDelivery(id) {
     var r = window.confirm('Deseja excluir a encomenda?');
-    if (r == true) {
+    if (r === true) {
       dispatch(deleteRequest(id));
     }
   }

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Problemas() {
   const [problems, setProblems] = useState([]);
   const [page, setPage] = useState(1);
-  const [itensPorPagina, setItensPorPagina] = useState(10);
+  const [itensPorPagina, setItensPorPagina] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);
 
   const classes = useStyles();
@@ -26,11 +26,12 @@ export default function Problemas() {
     async function loadProblems() {
       await api.get('/delivery/problems').then((response) => {
         setProblems(response.data.dados);
+        setItensPorPagina(10);
         setTotalPaginas(Math.ceil(response.data.count / itensPorPagina));
       });
     }
     loadProblems();
-  }, [page]);
+  }, [page, itensPorPagina]);
 
   const handleChange = (event, value) => {
     setPage(value);

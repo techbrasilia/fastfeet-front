@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { MdMoreHoriz, MdModeEdit, MdDelete } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { Container, Badge, ActionList } from './styles';
@@ -20,7 +19,7 @@ export default function ActionsDeliveryman(props) {
 
   function handleDeleteDeliveryman(id) {
     var r = window.confirm('Deseja excluir a encomenda?');
-    if (r == true) {
+    if (r === true) {
       dispatch(deleteRequest(id));
     }
   }
